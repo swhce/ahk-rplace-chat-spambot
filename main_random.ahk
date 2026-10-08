@@ -6,10 +6,6 @@ start:
 Gui, Submit, nohide
 random, newseed
 Random, C, 1, 25
-Gui, Add, Text,, First Color
-Gui, Add, Edit, vJ
-Gui, Add, Text,, Second Color
-Gui, Add, Edit, vK
 Gui, Add, Text,, Width (Left)
 Gui, Add, Edit, vGoL
 Gui, Add, Text,, Width (Right)
@@ -18,11 +14,14 @@ Gui, Add, Text,, Moving Enabled?
 Gui, Add, ComboBox, vM, y|n
 Gui, Add, StatusBar,, Bar
 SB_SetText("Inactive")
-Gui, Show,, ARCB (Default) by JurSecondie
+Gui, Show,, ARCB (Random Colors) by JurSecondie
 return
 
 colors:
 random, newseed
+Random, C, 1, 25
+Array := {1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8", 9: "9", 10: "a", 11: "b", 12: "c", 13: "d", 14: "e", 15: "f", 16: "g", 17: "h", 18: "i", 19: "j", 20: "k", 21: "l", 22: "m", 23: "n", 24: "o", 25: "p"}
+RN := Array[C]
 Random, GoTimes, 1500, 1800 ; randomized script cooldown trick to make the rplace.live server think it's a real human placing pixels and not just a macro that's doing it, preventing possible page reloads
 
 F7::
@@ -46,9 +45,9 @@ Loop
    {
 gosub colors
 Sleep, 100
-Send, % "{" J " down}"
+Send, % "{" RN " down}"
 Sleep, 100
-Send, % "{" J " up}"
+Send, % "{" RN " up}"
 Send, {Enter down}
 Sleep, 100
 Send, {Enter up}
@@ -59,9 +58,9 @@ Send, {Left up}
    }
 gosub colors
 Sleep, 100
-Send, % "{" J " down}"
+Send, % "{" RN " down}"
 Sleep, 100
-Send, % "{" J " up}"
+Send, % "{" RN " up}"
 Send, {Enter down}
 Sleep, 100
 Send, {Enter up}
@@ -73,9 +72,9 @@ Send, {Up up}
    {
 gosub colors
 Sleep, 100
-Send, % "{" K " down}"
+Send, % "{" RN " down}"
 Sleep, 100
-Send, % "{" K " up}"
+Send, % "{" RN " up}"
 Send, {Enter down}
 Sleep, 100
 Send, {Enter up}
@@ -86,9 +85,9 @@ Send, {Right up}
    }
 gosub colors
 Sleep, 100
-Send, % "{" K " down}"
+Send, % "{" RN " down}"
 Sleep, 100
-Send, % "{" K " up}"
+Send, % "{" RN " up}"
 Send, {Enter down}
 Sleep, 100
 Send, {Enter up}
@@ -104,9 +103,9 @@ Loop
 {
 gosub colors
 Sleep, 100
-Send, % "{" J " down}"
+Send, % "{" RN " down}"
 Sleep, 100
-Send, % "{" J " up}"
+Send, % "{" RN " up}"
 Sleep, 100
 Send, {Enter down}
 Sleep, 100
