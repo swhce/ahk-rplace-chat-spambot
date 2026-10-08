@@ -1,124 +1,86 @@
-GoTimes := 1500 ; rplace.live's cooldown appears to roughly be 2 seconds. this value will need to be lowered down during testing.
-
 Goto start
 
 start:
-Gui, Submit, nohide
-random, newseed
-Random, C, 1, 25
-Gui, Add, Text,, First Color
-Gui, Add, Edit, vJ
-Gui, Add, Text,, Second Color
-Gui, Add, Edit, vK
-Gui, Add, Text,, Width (Left)
-Gui, Add, Edit, vGoL
-Gui, Add, Text,, Width (Right)
-Gui, Add, Edit, vGoR
-Gui, Add, Text,, Moving Enabled?
-Gui, Add, ComboBox, vM, y|n
+Gui, Add, Text,, Amount to Spam (default is 12)
+Gui, Add, Edit, vM
+Gui, Add, Text,, Spam Method
+Gui, Add, ComboBox, vF, aut|man
 Gui, Add, StatusBar,, Bar
 SB_SetText("Inactive")
-Gui, Show,, ARCB (Default) by JurSecondie
+Gui, Show,, ARSM by JurSecondie
+spam := "@everyone "
 return
 
-colors:
-random, newseed
-Random, GoTimes, 1500, 1800 ; randomized script cooldown trick to make the rplace.live server think it's a real human placing pixels and not just a macro that's doing it, preventing possible page reloads
-
-F7::
-Gui, Submit, nohide
-Pause, Toggle
-return
-
-F6::
-Gui, Submit, nohide
-Reload
-return
-
-F5::
-Gui, Submit, nohide
+F1::
 SendMode, Input
-if (M = "y")
+Gui, Submit, NoHide
+if (F = "aut")
 {
-Loop
+Random, newseed
+Random, go, 100, 150
+Random, H, 0, 2147483647
+o := 1
+SB_SetText("Running")
+loop, %M% {
+loop, %go% {
+Random, newseed
+Random, RandTxt, 100, 150
+Random, RandSay, 1, 100
+Random, RS, 1, 10
+Random, RandHex, 1, 16
+Random, HexG, 8, 20
+if (o = "1")
 {
-   Loop % GoL - 1
-   {
-gosub colors
-Sleep, 100
-Send, % "{" J " down}"
-Sleep, 100
-Send, % "{" J " up}"
-Send, {Enter down}
-Sleep, 100
-Send, {Enter up}
-   Sleep, %GoTimes%
-Send, {Left down}
-Sleep, 100
-Send, {Left up}
-   }
-gosub colors
-Sleep, 100
-Send, % "{" J " down}"
-Sleep, 100
-Send, % "{" J " up}"
-Send, {Enter down}
-Sleep, 100
-Send, {Enter up}
-   Sleep, %GoTimes%
-Send, {Up down}
-Sleep, 100
-Send, {Up up}
-   Loop % GoR - 1
-   {
-gosub colors
-Sleep, 100
-Send, % "{" K " down}"
-Sleep, 100
-Send, % "{" K " up}"
-Send, {Enter down}
-Sleep, 100
-Send, {Enter up}
-   Sleep, %GoTimes%
-Send, {Right down}
-Sleep, 100
-Send, {Right up}
-   }
-gosub colors
-Sleep, 100
-Send, % "{" K " down}"
-Sleep, 100
-Send, % "{" K " up}"
-Send, {Enter down}
-Sleep, 100
-Send, {Enter up}
-   Sleep, %GoTimes%
-Send, {Up down}
-Sleep, 100
-Send, {Up up}
-   }
-}
-if (M = "n")
+if (RandSay = "1")
 {
-Loop
-{
-gosub colors
-Sleep, 100
-Send, % "{" J " down}"
-Sleep, 100
-Send, % "{" J " up}"
-Sleep, 100
-Send, {Enter down}
-Sleep, 100
-Send, {Enter up}
-Sleep, %GoTimes%
+Clipboard := spam
+Send, {Ctrl down}v{Ctrl up}
+sleep, 0
+o := 0
 }
 }
-return
-
-F8::
-ListVars
+loop %RandTxt%, {
+send, {ASC 34 up}
+send, {ASC 34 down}
+sleep, 0
+if RS between 1 and 2
+send, {space up}{space down}
+sleep, 0
+}
+send, {space up}{space down}
+Random, H, 0, 2147483647
+H .= Format("{:x}", H)
+Clipboard := H
+Send, {Ctrl down}v{Ctrl up}
+send, {enter up}{enter down}
+}
+SB_SetText("Inactive")
+}
+else if (F = "man")
+{
+Random, newseed
+Random, go, 100, 150
+Random, H, 0, 2147483647
+Send, {End down}{End up}
+send, {space up}{space down}
+H .= Format("{:x}", H)
+Clipboard := H
+Send, {Ctrl down}v{Ctrl up}
+send, {enter up}{enter down}
+}
 return
 
 GuiClose:
 ExitApp
+
+F2::
+ListVars
+return
+
+F3::
+Reload
+return
+
+F4::
+Pause, Toggle
+return
